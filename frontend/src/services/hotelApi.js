@@ -1,12 +1,16 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/hotels";
+const API_URL = "https://primestay-hotel-management.onrender.com/api/hotels";
+
 
 export const getHotels = async (params = {}) => {
 
-    const response = await axios.get(API_URL, {
-        params
-    });
+    const response = await axios.get(
+        API_URL,
+        {
+            params
+        }
+    );
 
     return response.data;
 };
