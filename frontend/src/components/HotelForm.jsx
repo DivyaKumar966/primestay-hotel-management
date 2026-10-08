@@ -39,10 +39,7 @@ function HotelForm({ hotelId }) {
                 setPrice(data.price);
 
                 if (data.image) {
-                    setPreview(
-                        `http://localhost:5000${data.image}`
-                    );
-
+                    setPreview(data.image);
                 }
 
             } catch (error) {
@@ -59,11 +56,14 @@ function HotelForm({ hotelId }) {
     const handleImageChange = (e) => {
 
         const file = e.target.files[0];
+
         if (file) {
 
             setImage(file);
 
-            setPreview( URL.createObjectURL(file));
+            setPreview(
+                URL.createObjectURL(file)
+            );
 
         }
     };
@@ -127,9 +127,14 @@ function HotelForm({ hotelId }) {
                     }
                 });
             }
+
         } catch (error) {
+
             console.log(error);
-        }};
+
+        }
+    };
+
 
     return (
 
@@ -140,10 +145,12 @@ function HotelForm({ hotelId }) {
                 onSubmit={handleSubmit}
             >
 
-                <h2>{hotelId
+                <h2>
+                    {hotelId
                         ? "Edit Hotel"
                         : "Add Hotel"
-                    }</h2>
+                    }
+                </h2>
 
                 {!preview && (
 
@@ -153,30 +160,55 @@ function HotelForm({ hotelId }) {
                             id="hotel-image"
                             type="file"
                             accept="image/*"
-                            onChange={handleImageChange}/>
- 
-                        <label htmlFor="hotel-image"className="upload-box">
+                            onChange={handleImageChange}
+                        />
 
-                            <span className="upload-icon">↑</span>
+                        <label
+                            htmlFor="hotel-image"
+                            className="upload-box"
+                        >
 
-                            <span className="upload-title">Upload Hotel Image </span>
+                            <span className="upload-icon">
+                                ↑
+                            </span>
 
-                            <span className="upload-text">Click to choose an image</span>
+                            <span className="upload-title">
+                                Upload Hotel Image
+                            </span>
+
+                            <span className="upload-text">
+                                Click to choose an image
+                            </span>
 
                         </label>
 
                     </div>
                 )}
+
+
                 {preview && (
 
                     <div className="selected-image">
 
-                        <img src={preview} alt="Hotel Preview" className="image-preview"/>
+                        <img
+                            src={preview}
+                            alt="Hotel Preview"
+                            className="image-preview"
+                        />
 
-                        <input id="change-hotel-image"type="file"  accept="image/*"onChange={handleImageChange}/>
+                        <input
+                            id="change-hotel-image"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                        />
 
-                        <label htmlFor="change-hotel-image" className="change-image">
-                            Change Image </label>
+                        <label
+                            htmlFor="change-hotel-image"
+                            className="change-image"
+                        >
+                            Change Image
+                        </label>
 
                     </div>
 

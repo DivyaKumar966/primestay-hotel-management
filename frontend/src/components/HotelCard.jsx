@@ -4,44 +4,72 @@ import OptionsMenu from "./OptionsMenu";
 function HotelCard({ hotel, onDelete }) {
 
     return (
-    <div className="hotel-card">
-        
-    <Link to={`/hotel/${hotel.id}`} className="hotel-card-main">
+        <div className="hotel-card">
 
-    <div className="hotel-card-image-wrapper">
+            <Link
+                to={`/hotel/${hotel.id}`}
+                className="hotel-card-main"
+            >
 
-    <img src={`http://localhost:5000${hotel.image}`} alt={hotel.title} className="hotel-card-image" />
+                <div className="hotel-card-image-wrapper">
 
-    </div>
+                    <img
+                        src={hotel.image}
+                        alt={hotel.title}
+                        className="hotel-card-image"
+                    />
 
-    <div className="hotel-card-content">
+                </div>
 
-       <span className="hotel-location">📍 Hotel Stay</span>
+                <div className="hotel-card-content">
 
-         <h3>{hotel.title}</h3>
+                    <span className="hotel-location">
+                        📍 Hotel Stay
+                    </span>
 
-        <p className="hotel-description">{hotel.description}</p>
+                    <h3>{hotel.title}</h3>
 
-<div className="coordinates">
+                    <p className="hotel-description">
+                        {hotel.description}
+                    </p>
 
-        <span>Latitude: {hotel.latitude} </span>
+                    <div className="coordinates">
 
-        <span>Longitude: {hotel.longitude}</span>
+                        <span>
+                            Latitude: {hotel.latitude}
+                        </span>
 
-        </div>
+                        <span>
+                            Longitude: {hotel.longitude}
+                        </span>
 
-        </div>
+                    </div>
+
+                </div>
+
             </Link>
 
             <div className="hotel-price">
-                <span>Starting from</span>
-                <h2>₹{hotel.price}</h2>
-                <small> per night</small>
 
-    <Link to={`/hotel/${hotel.id}`} className="view-button"> View Details → </Link>
+                <span>Starting from</span>
+
+                <h2>₹{hotel.price}</h2>
+
+                <small>per night</small>
+
+                <Link
+                    to={`/hotel/${hotel.id}`}
+                    className="view-button"
+                >
+                    View Details →
+                </Link>
+
             </div>
 
-            <OptionsMenu hotelId={hotel.id}onDelete={onDelete} />
+            <OptionsMenu
+                hotelId={hotel.id}
+                onDelete={onDelete}
+            />
 
         </div>
     );

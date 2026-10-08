@@ -23,8 +23,6 @@ function HotelDetails() {
 
                 setHotel(data);
 
-                document.title = `${data.title} | PRIME STAY`;
-
             } catch (error) {
                 console.log(error);
             }
@@ -35,11 +33,13 @@ function HotelDetails() {
     }, [id]);
 
     const handleBookNow = () => {
+
         setShowToast(true);
 
         setTimeout(() => {
             setShowToast(false);
         }, 3000);
+
     };
 
     if (!hotel) {
@@ -54,37 +54,61 @@ function HotelDetails() {
     return (
         <>
             <Helmet>
+
+                <title>
+                    {hotel.title} | PRIME STAY
+                </title>
+
                 <meta
                     name="description"
                     content={hotel.description}
                 />
-            </Helmet>
 
-            <title>{hotel.title} | PRIME STAY</title>
+            </Helmet>
 
             <Navbar />
 
             <div className="hotel-details">
 
                 <div className="hotel-details-image">
+
                     <img
-                        src={`http://localhost:5000${hotel.image}`}
+                        src={hotel.image}
                         alt={hotel.title}
                     />
+
                 </div>
+
 
                 <div className="hotel-details-info">
 
                     <h1>{hotel.title}</h1>
-                    <p>{hotel.description}</p>
-                    <p>Latitude: {hotel.latitude}</p>
-                    <p>Longitude: {hotel.longitude}</p>
 
-                    <h2>{hotel.price}</h2>
+                    <p>
+                        {hotel.description}
+                    </p>
 
-                    <button className="book-button" onClick={handleBookNow}>Book Now </button>
+                    <p>
+                        Latitude: {hotel.latitude}
+                    </p>
+
+                    <p>
+                        Longitude: {hotel.longitude}
+                    </p>
+
+                    <h2>
+                        ₹{hotel.price}
+                    </h2>
+
+                    <button
+                        className="book-button"
+                        onClick={handleBookNow}
+                    >
+                        Book Now
+                    </button>
 
                 </div>
+
 
                 <div className="hotel-map-space">
 
@@ -100,7 +124,7 @@ function HotelDetails() {
 
             <Footer />
 
-             {showToast && (
+            {showToast && (
                 <Toast message="Booking successful!" />
             )}
 

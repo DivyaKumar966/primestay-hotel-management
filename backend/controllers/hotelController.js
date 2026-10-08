@@ -1,6 +1,10 @@
 import db from "../db.js";
-import fs from "fs";
+import cloudinary from "../config/cloudinary.js";
 
+
+// =========================
+// GET ALL HOTELS
+// =========================
 
 export const getHotels = async (req, res) => {
 
@@ -19,6 +23,7 @@ export const getHotels = async (req, res) => {
         const values = [];
 
 
+        // Search by title
         if (title) {
 
             conditions.push(
@@ -30,6 +35,7 @@ export const getHotels = async (req, res) => {
         }
 
 
+        // Minimum price
         if (minPrice) {
 
             conditions.push(
@@ -41,6 +47,7 @@ export const getHotels = async (req, res) => {
         }
 
 
+        // Maximum price
         if (maxPrice) {
 
             conditions.push(
@@ -59,6 +66,7 @@ export const getHotels = async (req, res) => {
         `;
 
 
+        // WHERE conditions
         if (conditions.length > 0) {
 
             query +=
@@ -68,6 +76,11 @@ export const getHotels = async (req, res) => {
         }
 
 
+        // Consistent pagination order
+        query += " ORDER BY id";
+
+
+        // Limit
         if (limit) {
 
             query +=
@@ -78,6 +91,7 @@ export const getHotels = async (req, res) => {
         }
 
 
+        // Offset
         if (offset !== undefined) {
 
             query +=
@@ -88,18 +102,15 @@ export const getHotels = async (req, res) => {
         }
 
 
-        const result =
-            await db.query(
-                query,
-                values
-            );
+        const result = await db.query(
+            query,
+            values
+        );
 
 
         const total =
             result.rows.length > 0
-                ? Number(
-                    result.rows[0].total_count
-                )
+                ? Number(result.rows[0].total_count)
                 : 0;
 
 
@@ -118,106 +129,24 @@ export const getHotels = async (req, res) => {
 
     } catch (error) {
 
-        console.log(
-            error.message
-        );
+        console.log(error.message);
 
         res.status(500).json({
-            message:
-                "fetching data error"
+            message: "Fetching data error"
         });
 
     }
 
 };
 
+
+// =========================
+// CREATE HOTEL
+// =========================
 
 export const createHotel = async (req, res) => {
-    try {
-        const { title, description, latitude, longitude, price } = req.body;
-
-        if (!title || !description || !latitude || !longitude || !price || !req.file) {
-            return res.status(400).json({
-                message: "All fields are required"
-            });
-        }
-
-        if (price <= 0) {
-            return res.status(400).json({
-                message: "Price cannot be negative"
-            });
-        }
-
-        const image = `/uploads/${req.file.filename}`;
-
-        const result = await db.query(
-            "INSERT INTO hotels(image, title, description, latitude, longitude, price) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
-            [image, title, description, latitude, longitude, price]
-        );
-
-        res.json(result.rows[0]);
-
-    } catch (error) {
-        console.log(error.message);
-
-        res.status(500).json({
-            message: "Creation error"
-        });
-    }
-};
-
-
-export const deleteHotel = async (req, res) => {
-    try {
-
-        const { id } = req.params;
-
-        const result = await db.query(
-            "SELECT image FROM hotels WHERE id = $1",
-            [id]
-        );
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({
-                message: "Hotel not found"
-            });
-        }
-
-        const imagePath = result.rows[0].image;
-
-        if (imagePath) {
-            const filePath = "." + imagePath;
-
-            if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath);
-            }
-        }
-
-        await db.query(
-            "DELETE FROM hotels WHERE id = $1",
-            [id]
-        );
-
-        res.json({
-            message: "Hotel deleted successfully"
-        });
-
-    } catch (error) {
-
-        console.log(error.message);
-
-        res.status(500).json({
-            message: "Server Error"
-        });
-    }
-};
-
-
-export const updateHotel = async (req, res) => {
 
     try {
-
-        const { id } = req.params;
 
         const {
             title,
@@ -227,22 +156,209 @@ export const updateHotel = async (req, res) => {
             price
         } = req.body;
 
-        if (!title || !description || !latitude || !longitude || !price) {
+
+        // Required field validation
+        if (
+            !title ||
+            !description ||
+            !latitude ||
+            !longitude ||
+            !price ||
+            !req.file
+        ) {
+
             return res.status(400).json({
                 message: "All fields are required"
             });
+
         }
 
+
+        // Price validation
         if (price <= 0) {
+
             return res.status(400).json({
                 message: "Price must be greater than 0"
             });
+
         }
 
-        if (req.file === undefined) {
+
+        // Upload image to Cloudinary
+        const result = await cloudinary.uploader.upload(
+
+            `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+
+            {
+                folder: "prime-stay"
+            }
+
+        );
+
+
+        const image = result.secure_url;
+
+
+        // Insert hotel into database
+        const dbResult = await db.query(
+
+            `INSERT INTO hotels
+            (
+                image,
+                title,
+                description,
+                latitude,
+                longitude,
+                price
+            )
+            VALUES
+            ($1, $2, $3, $4, $5, $6)
+            RETURNING *`,
+
+            [
+                image,
+                title,
+                description,
+                latitude,
+                longitude,
+                price
+            ]
+
+        );
+
+
+        res.status(201).json(
+            dbResult.rows[0]
+        );
+
+
+    } catch (error) {
+
+        console.log(error.message);
+
+        res.status(500).json({
+            message: "Creation error"
+        });
+
+    }
+
+};
+
+
+// =========================
+// DELETE HOTEL
+// =========================
+
+export const deleteHotel = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+
+        const result = await db.query(
+
+            `DELETE FROM hotels
+             WHERE id = $1
+             RETURNING id`,
+
+            [id]
+
+        );
+
+
+        // Hotel not found
+        if (result.rows.length === 0) {
+
+            return res.status(404).json({
+                message: "Hotel not found"
+            });
+
+        }
+
+
+        res.json({
+            message: "Hotel deleted successfully"
+        });
+
+
+    } catch (error) {
+
+        console.log(error.message);
+
+        res.status(500).json({
+            message: "Server Error"
+        });
+
+    }
+
+};
+
+
+// =========================
+// UPDATE HOTEL
+// =========================
+
+export const updateHotel = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+
+        const {
+            title,
+            description,
+            latitude,
+            longitude,
+            price
+        } = req.body;
+
+
+        // Required field validation
+        if (
+            !title ||
+            !description ||
+            !latitude ||
+            !longitude ||
+            !price
+        ) {
+
+            return res.status(400).json({
+                message: "All fields are required"
+            });
+
+        }
+
+
+        // Price validation
+        if (price <= 0) {
+
+            return res.status(400).json({
+                message: "Price must be greater than 0"
+            });
+
+        }
+
+
+        // =========================
+        // UPDATE WITHOUT NEW IMAGE
+        // =========================
+
+        if (!req.file) {
 
             const result = await db.query(
-                "UPDATE hotels SET title = $1, description = $2, latitude = $3, longitude = $4, price = $5 WHERE id = $6 RETURNING *",
+
+                `UPDATE hotels
+                 SET
+                    title = $1,
+                    description = $2,
+                    latitude = $3,
+                    longitude = $4,
+                    price = $5
+                 WHERE id = $6
+                 RETURNING *`,
+
                 [
                     title,
                     description,
@@ -251,35 +367,93 @@ export const updateHotel = async (req, res) => {
                     price,
                     id
                 ]
+
             );
 
-            res.json({
+
+            if (result.rows.length === 0) {
+
+                return res.status(404).json({
+                    message: "Hotel not found"
+                });
+
+            }
+
+
+            return res.json({
+
                 message: "Hotel updated successfully",
+
                 hotel: result.rows[0]
+
             });
 
-        } else {
-
-            const image = `/uploads/${req.file.filename}`;
-
-            const result = await db.query(
-                "UPDATE hotels SET title = $1, description = $2, latitude = $3, longitude = $4, price = $5, image = $6 WHERE id = $7 RETURNING *",
-                [
-                    title,
-                    description,
-                    latitude,
-                    longitude,
-                    price,
-                    image,
-                    id
-                ]
-            );
-
-            res.json({
-                message: "Hotel updated successfully",
-                hotel: result.rows[0]
-            });
         }
+
+
+        // =========================
+        // UPDATE WITH NEW IMAGE
+        // =========================
+
+        const uploadResult =
+            await cloudinary.uploader.upload(
+
+                `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+
+                {
+                    folder: "prime-stay"
+                }
+
+            );
+
+
+        const image =
+            uploadResult.secure_url;
+
+
+        const result = await db.query(
+
+            `UPDATE hotels
+             SET
+                title = $1,
+                description = $2,
+                latitude = $3,
+                longitude = $4,
+                price = $5,
+                image = $6
+             WHERE id = $7
+             RETURNING *`,
+
+            [
+                title,
+                description,
+                latitude,
+                longitude,
+                price,
+                image,
+                id
+            ]
+
+        );
+
+
+        if (result.rows.length === 0) {
+
+            return res.status(404).json({
+                message: "Hotel not found"
+            });
+
+        }
+
+
+        res.json({
+
+            message: "Hotel updated successfully",
+
+            hotel: result.rows[0]
+
+        });
+
 
     } catch (error) {
 
@@ -288,8 +462,15 @@ export const updateHotel = async (req, res) => {
         res.status(500).json({
             message: "Server error"
         });
+
     }
+
 };
+
+
+// =========================
+// GET HOTEL BY ID
+// =========================
 
 export const getHotelById = async (req, res) => {
 
@@ -297,18 +478,32 @@ export const getHotelById = async (req, res) => {
 
         const { id } = req.params;
 
+
         const result = await db.query(
-            "SELECT * FROM hotels WHERE id = $1",
+
+            `SELECT *
+             FROM hotels
+             WHERE id = $1`,
+
             [id]
+
         );
 
+
+        // Hotel not found
         if (result.rows.length === 0) {
+
             return res.status(404).json({
                 message: "Hotel not found"
             });
+
         }
 
-        res.json(result.rows[0]);
+
+        res.json(
+            result.rows[0]
+        );
+
 
     } catch (error) {
 
@@ -317,5 +512,7 @@ export const getHotelById = async (req, res) => {
         res.status(500).json({
             message: "Server error"
         });
+
     }
+
 };

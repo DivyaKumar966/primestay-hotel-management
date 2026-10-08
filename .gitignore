@@ -2,3 +2,9 @@ node_modules/
 .env
 uploads/
 dist/
+
+# Database backups
+*.sql
+
+# Migration scripts
+backend/scripts/
