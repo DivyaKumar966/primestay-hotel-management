@@ -5,7 +5,21 @@ import {
     Popup
 } from "react-leaflet";
 
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+// Fix Leaflet marker icons in Vite production build
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: markerIcon2x,
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow
+});
 
 function Map({ latitude, longitude, title }) {
 
@@ -20,7 +34,7 @@ function Map({ latitude, longitude, title }) {
         >
 
             <TileLayer
-                attribution='&copy; OpenStreetMap contributors'
+                attribution="&copy; OpenStreetMap contributors"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
