@@ -1,9 +1,4 @@
-import {
-    MapContainer,
-    TileLayer,
-    Marker,
-    Popup
-} from "react-leaflet";
+import {MapContainer,TileLayer, Marker,Popup} from "react-leaflet";
 
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -12,7 +7,6 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-// Fix Leaflet marker icons in Vite production build
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({

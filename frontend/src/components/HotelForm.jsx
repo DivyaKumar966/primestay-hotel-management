@@ -7,7 +7,6 @@ import {
     updateHotel
 } from "../services/hotelApi";
 
-
 function HotelForm({ hotelId }) {
 
     const navigate = useNavigate();
@@ -43,12 +42,8 @@ function HotelForm({ hotelId }) {
                 }
 
             } catch (error) {
-
                 console.log(error);
-
-            }
-        };
-
+            } };
         loadHotel();
 
     }, [hotelId]);
@@ -63,17 +58,12 @@ function HotelForm({ hotelId }) {
 
             setPreview(
                 URL.createObjectURL(file)
-            );
-
-        }
+            );}
     };
 
-
-    // Create / Update
     const handleSubmit = async (e) => {
 
         e.preventDefault();
-
         const formData = new FormData();
 
         formData.append("title", title);
@@ -89,15 +79,9 @@ function HotelForm({ hotelId }) {
                 "image",
                 image
             );
-
         }
-
-
         try {
-
             if (hotelId) {
-
-                // EDIT
                 await updateHotel(
                     hotelId,
                     formData
@@ -110,17 +94,13 @@ function HotelForm({ hotelId }) {
                 });
 
             } else {
-
-                // CREATE
                 formData.append(
                     "id",
                     Date.now()
                 );
-
                 await createHotel(
                     formData
                 );
-
                 navigate("/", {
                     state: {
                         toast: "Hotel created successfully!"
@@ -185,9 +165,7 @@ function HotelForm({ hotelId }) {
                     </div>
                 )}
 
-
                 {preview && (
-
                     <div className="selected-image">
 
                         <img
@@ -196,102 +174,34 @@ function HotelForm({ hotelId }) {
                             className="image-preview"
                         />
 
-                        <input
-                            id="change-hotel-image"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                        />
+                        <input id="change-hotel-image" type="file" accept="image/*" onChange={handleImageChange}/>
 
-                        <label
-                            htmlFor="change-hotel-image"
-                            className="change-image"
-                        >
+                        <label htmlFor="change-hotel-image" className="change-image" >
                             Change Image
                         </label>
-
                     </div>
-
                 )}
 
+                <input type="text"placeholder="Hotel Title"value={title}onChange={(e) =>
+                        setTitle(e.target.value)}required />
 
-                {/* Hotel Title */}
+                <textarea placeholder="Hotel Description" value={description} onChange={(e) =>
+                        setDescription(e.target.value)}required />
 
-                <input
-                    type="text"
-                    placeholder="Hotel Title"
-                    value={title}
-                    onChange={(e) =>
-                        setTitle(e.target.value)
-                    }
-                    required
-                />
+                <input type="number"step="any" placeholder="Latitude"value={latitude}onChange={(e) =>
+                 setLatitude(e.target.value) } required/>
 
+                <input type="number"step="any" placeholder="Longitude" value={longitude}onChange={(e) => 
+                    setLongitude(e.target.value)  } required/>
 
-                {/* Description */}
-
-                <textarea
-                    placeholder="Hotel Description"
-                    value={description}
-                    onChange={(e) =>
-                        setDescription(e.target.value)
-                    }
-                    required
-                />
-
-
-                {/* Latitude */}
-
-                <input
-                    type="number"
-                    step="any"
-                    placeholder="Latitude"
-                    value={latitude}
-                    onChange={(e) =>
-                        setLatitude(e.target.value)
-                    }
-                    required
-                />
-
-
-                {/* Longitude */}
-
-                <input
-                    type="number"
-                    step="any"
-                    placeholder="Longitude"
-                    value={longitude}
-                    onChange={(e) =>
-                        setLongitude(e.target.value)
-                    }
-                    required
-                />
-
-
-                {/* Price */}
-
-                <input
-                    type="number"
-                    min="0"
-                    placeholder="Price"
-                    value={price}
-                    onChange={(e) =>
-                        setPrice(e.target.value)
-                    }
-                    required
-                />
-
-
-                {/* Submit */}
+                <input type="number" min="0"placeholder="Price"value={price}onChange={(e) => 
+                    setPrice(e.target.value)}required/>
 
                 <button type="submit">
-
                     {hotelId
                         ? "Update Hotel"
                         : "Save Hotel"
-                    }
-
-                </button>
+                    }</button>
 
             </form>
 

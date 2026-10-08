@@ -84,26 +84,17 @@ function HotelDetails() {
 
                     <h1>{hotel.title}</h1>
 
-                    <p>
-                        {hotel.description}
-                    </p>
+                    <p>  {hotel.description} </p>
 
-                    <p>
-                        Latitude: {hotel.latitude}
-                    </p>
+                    <p>Latitude: {hotel.latitude} </p>
 
-                    <p>
-                        Longitude: {hotel.longitude}
-                    </p>
+                    <p>Longitude: {hotel.longitude}</p>
 
-                    <h2>
-                        ₹{hotel.price}
-                    </h2>
+                    <h2>₹{hotel.price} </h2>
 
                     <button
                         className="book-button"
-                        onClick={handleBookNow}
-                    >
+                        onClick={handleBookNow}>
                         Book Now
                     </button>
 

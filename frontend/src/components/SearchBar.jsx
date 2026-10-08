@@ -15,21 +15,13 @@ function SearchBar({ onSearch }) {
 
                 <span>⌕</span>
 
-                <input
-                    type="text"
-                    placeholder="Search hotels by name..."
-                    value={title}
-                    onChange={(e) =>
-                        setTitle(e.target.value)
-                    }
-                />
-
+                <input type="text"placeholder="Search hotels by name..."value={title}onChange={(e) =>
+                    setTitle(e.target.value)} />
             </div>
 
             <button
                 className="search-button"
-                onClick={handleSearch}
-            >
+                onClick={handleSearch}>
                 Search
             </button>
 

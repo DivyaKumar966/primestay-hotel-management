@@ -14,8 +14,7 @@ function EditHotel() {
 
     return (
         <>
-            <Helmet>
-                <title>PRIME STAY - Edit Hotel</title>
+            <Helmet> <title>PRIME STAY - Edit Hotel</title>
             </Helmet>
 
             <Navbar />

@@ -11,30 +11,14 @@ import Pagination from "../components/Pagination";
 import Footer from "../components/Footer";
 import Toast from "../components/Toast";
 
-import {
-    fetchHotels,
-    setSearch,
-    setPriceFilter,
-    setCurrentPage,
-    removeHotel
-} from "../redux/hotelSlice";
+import { fetchHotels,setSearch,setPriceFilter,setCurrentPage,removeHotel} from "../redux/hotelSlice";
 
 function HotelList() {
 
     const dispatch = useDispatch();
     const location = useLocation();
 
-    const {
-        hotels,
-        loading,
-        error,
-        search,
-        minPrice,
-        maxPrice,
-        currentPage,
-        hotelsPerPage,
-        totalHotels
-    } = useSelector((state) => state.hotels);
+    const { hotels, loading, error,search, minPrice, maxPrice, currentPage, hotelsPerPage, totalHotels} = useSelector((state) => state.hotels);
 
     const [toast, setToast] = useState(
         location.state?.toast || ""
@@ -49,24 +33,12 @@ function HotelList() {
     useEffect(() => {
 
         dispatch(
-            fetchHotels({
-                title: search,
-                minPrice: minPrice,
-                maxPrice: maxPrice,
-                limit: hotelsPerPage,
-                offset: (currentPage - 1) * hotelsPerPage
-            })
+            fetchHotels({ title: search, minPrice: minPrice, maxPrice: maxPrice, limit: hotelsPerPage,offset: (currentPage - 1) * hotelsPerPage})
         );
 
     }, [
         dispatch,
-        search,
-        minPrice,
-        maxPrice,
-        currentPage,
-        hotelsPerPage
-    ]);
-
+        search,minPrice,maxPrice,currentPage, hotelsPerPage]);
 
     useEffect(() => {
 

@@ -12,25 +12,15 @@ export const fetchHotels = createAsyncThunk("hotels/fetchHotels",
     }
 );
 
-
 const initialState = {
-
     hotels: [],
-
     loading: false,
-
     error: null,
-
     search: "",
-
     minPrice: "",
-
     maxPrice: "",
-
     currentPage: 1,
-
     hotelsPerPage: 5,
-
     totalHotels: 0
 };
 
@@ -38,16 +28,11 @@ const initialState = {
 const hotelSlice = createSlice({
 
     name: "hotels",
-
     initialState,
-
     reducers: {
-
         setSearch: (state, action) => {
-
             state.search = action.payload;
             state.currentPage = 1;
-
         },
         resetFilters: (state) => {
         state.search = "";
@@ -57,18 +42,13 @@ const hotelSlice = createSlice({
     },
 
         setPriceFilter: (state, action) => {
-
             state.minPrice = action.payload.minPrice;
             state.maxPrice = action.payload.maxPrice;
-
             state.currentPage = 1;
-
         },
 
         setCurrentPage: (state, action) => {
-
             state.currentPage = action.payload;
-
         },
 
         removeHotel: (state, action) => {

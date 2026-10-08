@@ -8,24 +8,21 @@ function HotelCard({ hotel, onDelete }) {
 
             <Link
                 to={`/hotel/${hotel.id}`}
-                className="hotel-card-main"
-            >
+                className="hotel-card-main">
 
                 <div className="hotel-card-image-wrapper">
 
                     <img
                         src={hotel.image}
                         alt={hotel.title}
-                        className="hotel-card-image"
-                    />
+                        className="hotel-card-image"/>
 
                 </div>
 
                 <div className="hotel-card-content">
 
                     <span className="hotel-location">
-                        📍 Hotel Stay
-                    </span>
+                        📍 Hotel Stay</span>
 
                     <h3>{hotel.title}</h3>
 
@@ -60,16 +57,12 @@ function HotelCard({ hotel, onDelete }) {
                 <Link
                     to={`/hotel/${hotel.id}`}
                     className="view-button"
-                >
-                    View Details →
-                </Link>
-
+                > View Details →</Link>
             </div>
 
             <OptionsMenu
                 hotelId={hotel.id}
-                onDelete={onDelete}
-            />
+                onDelete={onDelete}/>
 
         </div>
     );

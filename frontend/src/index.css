@@ -688,14 +688,6 @@ a {
     }
 }
 
-
-
-
-
-/* ================================= */
-/* HOTEL FORM CONTAINER */
-/* ================================= */
-
 .hotel-form-container {
     width: 100%;
     min-height: calc(100vh - 72px);
@@ -719,10 +711,7 @@ a {
     gap: 20px;
 }
 
-
-/* ================================= */
 /* HEADING */
-/* ================================= */
 
 .hotel-form h2 {
     grid-column: 1 / -1;
@@ -734,10 +723,7 @@ a {
     font-weight: 700;
 }
 
-
-/* ================================= */
 /* INPUTS */
-/* ================================= */
 
 .hotel-form input,
 .hotel-form textarea {
@@ -772,11 +758,7 @@ a {
         0 0 0 3px rgba(59, 130, 246, 0.08);
 }
 
-
-/* ================================= */
 /* DESCRIPTION */
-/* ================================= */
-
 .hotel-form textarea {
     grid-column: 1 / -1;
 
@@ -785,11 +767,7 @@ a {
     resize: vertical;
 }
 
-
-/* ================================= */
 /* IMAGE UPLOAD */
-/* ================================= */
-
 .image-upload {
     grid-column: 1 / -1;
 
@@ -858,11 +836,7 @@ a {
     font-size: 13px;
 }
 
-
-/* ================================= */
 /* SELECTED IMAGE */
-/* ================================= */
-
 .selected-image {
     grid-column: 1 / -1;
 
@@ -887,11 +861,6 @@ a {
 
     border: 1px solid #D9E2E0;
 }
-
-
-/* ================================= */
-/* CHANGE IMAGE BUTTON */
-/* ================================= */
 
 .change-image {
     display: inline-block;
@@ -919,11 +888,7 @@ a {
     border-color: #3B82F6;
 }
 
-
-/* ================================= */
 /* SUBMIT BUTTON */
-/* ================================= */
-
 .hotel-form button {
     grid-column: 1 / -1;
 
@@ -952,11 +917,7 @@ a {
     transform: translateY(-1px);
 }
 
-
-/* ================================= */
-/* MOBILE */
-/* ================================= */
-
+/* Mobile */
 @media (max-width: 650px) {
 
     .hotel-form-container {
@@ -986,13 +947,9 @@ a {
     }
 }
 
-/* ================================= */
-/* RESPONSIVE - MOBILE */
-/* ================================= */
-
+/*Mobile 2 */
 @media (max-width: 768px) {
 
-    /* Navbar */
     .navbar {
         height: auto;
         min-height: 65px;
@@ -1016,8 +973,6 @@ a {
         font-size: 13px;
     }
 
-
-    /* Hero */
     .hero {
         height: 420px;
     }
@@ -1046,8 +1001,6 @@ a {
         font-size: 15px;
     }
 
-
-    /* Search */
     .hero-search {
         width: 90%;
         bottom: -55px;
@@ -1070,8 +1023,6 @@ a {
         padding: 0;
     }
 
-
-    /* Price Filter */
     .filter-section {
         width: 90%;
         margin-top: 90px;
@@ -1099,8 +1050,6 @@ a {
         height: 45px;
     }
 
-
-    /* Hotel Section */
     .hotel-section {
         width: 90%;
         margin-top: 30px;
@@ -1116,8 +1065,6 @@ a {
         font-size: 26px;
     }
 
-
-    /* Hotel Card */
     .hotel-card {
         flex-direction: column;
         min-height: auto;
@@ -1156,8 +1103,6 @@ a {
         margin-top: 14px;
     }
 
-
-    /* Price */
     .hotel-price {
         width: 100%;
         padding: 18px 20px 22px;
@@ -1173,15 +1118,11 @@ a {
         text-align: center;
     }
 
-
-    /* Options Menu */
     .options-menu {
         top: 12px;
         right: 12px;
     }
 
-
-    /* Pagination */
     .pagination {
         flex-wrap: wrap;
         gap: 6px;
@@ -1193,8 +1134,6 @@ a {
         height: 35px;
     }
 
-
-    /* Footer */
     .footer {
         padding: 40px 6% 20px;
     }
@@ -1211,8 +1150,6 @@ a {
         margin-top: 30px;
     }
 
-
-    /* Hotel Details */
     .hotel-details {
         width: 90%;
         margin: 30px auto;
@@ -1244,9 +1181,7 @@ a {
     .hotel-map-space {
         height: 350px;
     }
-
-
-    /* Toast */
+    
     .toast {
         top: 75px;
         right: 15px;
@@ -1254,12 +1189,7 @@ a {
         text-align: center;
     }
 }
-
-
-/* ================================= */
 /* SMALL MOBILE */
-/* ================================= */
-
 @media (max-width: 480px) {
 
     .navbar {

@@ -9,9 +9,7 @@ function AddHotel() {
     return (
         <>
             <Helmet>
-                <title>
-                    PRIME STAY - Add Hotel
-                </title>
+                <title>PRIME STAY - Add Hotel </title>
             </Helmet>
 
             <Navbar />

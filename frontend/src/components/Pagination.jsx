@@ -1,8 +1,4 @@
-function Pagination({
-    currentPage,
-    totalPages,
-    onPageChange
-}) {
+function Pagination({currentPage,totalPages, onPageChange}) {
 
     if (totalPages <= 1) {
         return null;
@@ -36,17 +32,12 @@ function Pagination({
                                     : ""
                             }
                             onClick={() =>
-                                onPageChange(page)
-                            }
-                        >
+                                onPageChange(page)}>
                             {page}
                         </button>
                     );
-
                 }
             )}
-
-
             <button
                 disabled={currentPage === totalPages}
                 onClick={() =>
