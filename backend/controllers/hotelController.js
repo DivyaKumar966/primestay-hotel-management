@@ -142,6 +142,12 @@ export const createHotel = async (req, res) => {
             });
         }
 
+        if (price <= 0) {
+            return res.status(400).json({
+                message: "Price cannot be negative"
+            });
+        }
+
         const image = `/uploads/${req.file.filename}`;
 
         const result = await db.query(
@@ -210,21 +216,41 @@ export const deleteHotel = async (req, res) => {
 export const updateHotel = async (req, res) => {
 
     try {
+
+        const { id } = req.params;
+
+        const {
+            title,
+            description,
+            latitude,
+            longitude,
+            price
+        } = req.body;
+
+        if (!title || !description || !latitude || !longitude || !price) {
+            return res.status(400).json({
+                message: "All fields are required"
+            });
+        }
+
+        if (price <= 0) {
+            return res.status(400).json({
+                message: "Price must be greater than 0"
+            });
+        }
+
         if (req.file === undefined) {
 
-            const { id } = req.params;
-
-            const { title, description, latitude, longitude, price } = req.body;
-
-            if (!title || !description || !latitude || !longitude || !price) {
-                return res.status(400).json({
-                    message: "All fields are required"
-                });
-            }
-
             const result = await db.query(
-                "UPDATE hotels SET title = $1,description = $2,latitude = $3,longitude = $4,price = $5 WHERE id = $6 RETURNING *",
-                [title, description, latitude, longitude, price, id]
+                "UPDATE hotels SET title = $1, description = $2, latitude = $3, longitude = $4, price = $5 WHERE id = $6 RETURNING *",
+                [
+                    title,
+                    description,
+                    latitude,
+                    longitude,
+                    price,
+                    id
+                ]
             );
 
             res.json({
@@ -234,21 +260,19 @@ export const updateHotel = async (req, res) => {
 
         } else {
 
-            const { id } = req.params;
-
-            const { title, description, latitude, longitude, price } = req.body;
-
-            if (!title || !description || !latitude || !longitude || !price) {
-                return res.status(400).json({
-                    message: "All fields are required"
-                });
-            }
-
             const image = `/uploads/${req.file.filename}`;
 
             const result = await db.query(
-                "UPDATE hotels SET title = $1,description = $2,latitude = $3,longitude = $4,price = $5,image = $6 WHERE id = $7 RETURNING *",
-                [title, description, latitude, longitude, price, image, id]
+                "UPDATE hotels SET title = $1, description = $2, latitude = $3, longitude = $4, price = $5, image = $6 WHERE id = $7 RETURNING *",
+                [
+                    title,
+                    description,
+                    latitude,
+                    longitude,
+                    price,
+                    image,
+                    id
+                ]
             );
 
             res.json({
@@ -266,7 +290,6 @@ export const updateHotel = async (req, res) => {
         });
     }
 };
-
 
 export const getHotelById = async (req, res) => {
 
