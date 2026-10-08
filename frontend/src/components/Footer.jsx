@@ -7,13 +7,9 @@ function Footer() {
 
                 <div className="footer-brand">
 
-                    <h2>
-                         PRIME STAY
-                    </h2>
+                    <h2>PRIME STAY</h2>
 
-                    <p>
-                        Your perfect stay, our priority.
-                    </p>
+                    <p> Your perfect stay, our priority.</p>
 
                 </div>
 
@@ -41,9 +37,9 @@ function Footer() {
 
                     <h4>Contact</h4>
 
-                    <p>📧 support@primestay.com</p>
-                    <p>📞 +91 12345 67890</p>
-                    <p>📍 Tamil Nadu, India</p>
+                    <p> support@primestay.com</p>
+                    <p> +91 12345 67890</p>
+                    <p> Tamil Nadu, India</p>
 
                 </div>
 
@@ -51,13 +47,9 @@ function Footer() {
 
             <div className="footer-bottom">
 
-                <p>
-                    © 2026 PRIME STAY. All rights reserved.
-                </p>
+                <p> © 2026 PRIME STAY. All rights reserved.</p>
 
-                <p>
-                    Made with ❤️ for travellers
-                </p>
+                <p>Made with By Divya Kumar P</p>
 
             </div>
 

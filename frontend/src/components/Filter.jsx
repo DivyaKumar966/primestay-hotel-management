@@ -7,10 +7,7 @@ function Filter({ onFilter }) {
 
     const handleFilter = () => {
 
-        onFilter({
-            minPrice,
-            maxPrice
-        });
+        onFilter({ minPrice, maxPrice});
 
     };
 
@@ -24,23 +21,16 @@ function Filter({ onFilter }) {
                 value={minPrice}
                 onChange={(e) =>
                     setMinPrice(e.target.value)
-                }
-            />
+                } />
 
             <input
                 type="number"
                 placeholder="Maximum price"
                 value={maxPrice}
                 onChange={(e) =>
-                    setMaxPrice(e.target.value)
-                }
-            />
+                    setMaxPrice(e.target.value)}/>
 
-            <button
-                onClick={handleFilter}
-            >
-                Apply Filter
-            </button>
+            <button onClick={handleFilter}>Apply Filter</button>
 
         </div>
     );
