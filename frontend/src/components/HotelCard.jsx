@@ -22,7 +22,7 @@ function HotelCard({ hotel, onDelete }) {
                 <div className="hotel-card-content">
 
                     <span className="hotel-location">
-                        📍 Hotel Stay</span>
+                         Hotel Stay</span>
 
                     <h3>{hotel.title}</h3>
 
