@@ -199,7 +199,7 @@ export const updateHotel = async (req, res) => {
         if (!req.file) {
 
             const result = await db.query(
-                `UPDATE hotels SET title = $1,description = $2,latitude = $3, longitude = $4,price = $5 WHERE id = $6 RETURNING *`,
+                `UPDATE hotels SET title = $1, description = $2, latitude = $3, longitude = $4, price = $5 WHERE id = $6 RETURNING *`,
                 [title,description, latitude,longitude, price, id]
             );
 
@@ -226,7 +226,7 @@ export const updateHotel = async (req, res) => {
         const image =uploadResult.secure_url;
 
         const result = await db.query(
-                `UPDATE hotelsSETtitle = $1,description = $2,latitude = $3,longitude = $4,price = $5,image = $6 WHERE id = $7 RETURNING *`,
+                `UPDATE hotels SET title = $1, description = $2, latitude = $3, longitude = $4, price = $5, image = $6 WHERE id = $7 RETURNING *`,
 
             [title,description,latitude,longitude,price,image,id]
         );
@@ -255,7 +255,7 @@ export const getHotelById = async (req, res) => {
 
         const { id } = req.params;
         const result = await db.query(
-            `SELECT * FROM hotelsWHERE id = $1`,
+            `SELECT * FROM hotels WHERE id = $1`,
             [id]
             );
         if (result.rows.length === 0) {
